@@ -3,17 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ModeToggle } from "@/components/mode-toggle";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 
 // ComingSoon - single-file React + TypeScript component for a Vite app using shadcn UI
 // - No rounded borders (user preference)
 // - Simple full-screen banner with 2 buttons that redirect to /login and /register
 
 const ComingSoon: React.FC = () => {
-    const goTo = (path: string) => {
-        // plain client-side redirect that works without a specific router.
-        // If you use react-router, you can replace this with useNavigate.
-        window.location.href = path;
-    };
 
     return (
         <main className="min-h-screen flex items-center justify-center">
@@ -29,24 +25,29 @@ const ComingSoon: React.FC = () => {
                         </p>
 
                         <div className="mt-8 flex items-center justify-center gap-4">
-                            <Button
-                                onClick={() => goTo("/login")}
-                                className="px-8 py-3 border-2"
-                                aria-label="Sign in to Invoice Management System"
-                            >
-                                Sign In
+
+                            <Button asChild>
+                                <Link
+                                    to='/login'
+                                    className="px-8 py-3"
+                                    aria-label="Sign in to Invoice Management System"
+                                >
+                                    Sign In
+                                </Link>
                             </Button>
 
-                            <Button
-                                onClick={() => goTo("/register")}
-                                className="px-8 py-3"
-                                variant={"outline"} // variant typing depends on your shadcn setup; cast to any if needed
-                                aria-label="Register for Invoice Management System"
-                            >
-                                Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                            <Button asChild variant={"outline"}>
+                                <Link
+                                    to='/register'
+                                    className="px-8 py-3"
+                                    aria-label="Register for Invoice Management System"
+                                >
+                                    Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                                </Link>
                             </Button>
 
                             <ModeToggle />
+
                         </div>
 
                         <div className="mt-10 text-sm text-muted-foreground">

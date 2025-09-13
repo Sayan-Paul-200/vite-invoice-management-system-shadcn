@@ -11,10 +11,11 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ArrowRight } from "lucide-react"
+import { Link } from "react-router"
 
 export function Register() {
     return (
-        <main className="min-h-screen flex items-center justify-center">
+        <div className="w-full flex items-center justify-center px-4">
             <Card className="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle>Create a new account</CardTitle>
@@ -64,10 +65,12 @@ export function Register() {
                     </Button>
                     <CardAction>
                         Already have an account?{" "}
-                        <Button variant="link">Login <ArrowRight className="ml-2 h-4 w-4" /></Button>
+                        <Button variant="link" asChild >
+                            <Link to='/login' >Login <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                        </Button>
                     </CardAction>
                 </CardFooter>
             </Card>
-        </main>
+        </div>
     )
 }
