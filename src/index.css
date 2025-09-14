@@ -29,6 +29,19 @@
   --chart-3: oklch(0.5500 0.2200 263);
   --chart-4: oklch(0.4900 0.2200 264);
   --chart-5: oklch(0.4200 0.1800 266);
+  --chart-bihar: oklch(62% 0.20 45);            /* warm amber */
+  --chart-delhi: oklch(56% 0.18 200);           /* cyan-blue */
+  --chart-goa: oklch(64% 0.17 160);             /* sea green */
+  --chart-gujarat: oklch(55% 0.22 260);         /* indigo */
+  --chart-haryana: oklch(62% 0.18 95);          /* lime */
+  --chart-jharkhand: oklch(56% 0.22 12);        /* brick red */
+  --chart-madhya-pradesh: oklch(58% 0.20 215);  /* deep blue */
+  --chart-odisha: oklch(60% 0.18 185);          /* teal */
+  --chart-port-blair: oklch(65% 0.16 340);      /* warm pink */
+  --chart-rajasthan: oklch(60% 0.22 35);        /* saffron/orange */
+  --chart-sikkim: oklch(58% 0.21 280);          /* violet */
+  --chart-uttar-pradesh: oklch(56% 0.19 210);   /* royal blue */
+  --chart-west-bengal: oklch(54% 0.20 350);     /* maroon / deep red */
   --sidebar: oklch(0.9829 0.0145 102.4500);
   --sidebar-foreground: oklch(0.1450 0 0);
   --sidebar-primary: oklch(0.2050 0 0);
@@ -78,6 +91,19 @@
   --chart-3: oklch(0.5500 0.2200 263);
   --chart-4: oklch(0.4900 0.2200 264);
   --chart-5: oklch(0.4200 0.1800 266);
+  --chart-bihar: oklch(62% 0.20 45);            /* warm amber */
+  --chart-delhi: oklch(56% 0.18 200);           /* cyan-blue */
+  --chart-goa: oklch(64% 0.17 160);             /* sea green */
+  --chart-gujarat: oklch(55% 0.22 260);         /* indigo */
+  --chart-haryana: oklch(62% 0.18 95);          /* lime */
+  --chart-jharkhand: oklch(56% 0.22 12);        /* brick red */
+  --chart-madhya-pradesh: oklch(58% 0.20 215);  /* deep blue */
+  --chart-odisha: oklch(60% 0.18 185);          /* teal */
+  --chart-port-blair: oklch(65% 0.16 340);      /* warm pink */
+  --chart-rajasthan: oklch(60% 0.22 35);        /* saffron/orange */
+  --chart-sikkim: oklch(58% 0.21 280);          /* violet */
+  --chart-uttar-pradesh: oklch(56% 0.19 210);   /* royal blue */
+  --chart-west-bengal: oklch(54% 0.20 350);     /* maroon / deep red */
   --sidebar: oklch(0.2050 0 0);
   --sidebar-foreground: oklch(0.9850 0 0);
   --sidebar-primary: oklch(0.4880 0.2430 264.3760);

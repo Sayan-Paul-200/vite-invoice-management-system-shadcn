@@ -1,4 +1,4 @@
-import { Calendar, ChevronUp, Home, Inbox, LayoutDashboard, ReceiptText, Search, Settings, User2 } from "lucide-react"
+import { ChevronUp, LayoutDashboard, ReceiptText, User2 } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -26,31 +26,6 @@ const items = [
     url: "/invoices",
     icon: ReceiptText,
   },
-//   {
-//     title: "Home",
-//     url: "#",
-//     icon: Home,
-//   },
-//   {
-//     title: "Inbox",
-//     url: "#",
-//     icon: Inbox,
-//   },
-//   {
-//     title: "Calendar",
-//     url: "#",
-//     icon: Calendar,
-//   },
-//   {
-//     title: "Search",
-//     url: "#",
-//     icon: Search,
-//   },
-//   {
-//     title: "Settings",
-//     url: "#",
-//     icon: Settings,
-//   },
 ]
 
 export function AppSidebar() {
