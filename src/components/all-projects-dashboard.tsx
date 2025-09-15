@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { BadgeIndianRupee, BanknoteArrowUp, ClipboardClock, ReceiptText } from "lucide-react"
 import { ChartBarStacked } from "./all-projects-barcharts"
-import { ChartPieLabel } from "./all-projects-piecharts"
+import { ChartPieInteractive } from "./all-projects-donut"
 
 const AllProjects = () => {
     return (
@@ -81,7 +81,8 @@ const AllProjects = () => {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <ChartPieLabel />
+                        {/* <ChartPieLabel /> */}
+                        <ChartPieInteractive />
                     </CardContent>
                 </Card>
             </div>
