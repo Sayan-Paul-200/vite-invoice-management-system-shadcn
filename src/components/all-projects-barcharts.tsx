@@ -2,8 +2,12 @@ import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 
 import {
+    Card,
     CardContent,
+    CardDescription,
     CardFooter,
+    CardHeader,
+    CardTitle,
 } from "@/components/ui/card"
 import {
     type ChartConfig,
@@ -38,7 +42,11 @@ const chartConfig = {
 
 export function ChartBarStacked() {
     return (
-        <>
+        <Card className="col-span-1 lg:col-span-1 flex flex-col">
+            <CardHeader>
+                <CardTitle>Overview</CardTitle>
+                <CardDescription>Overview of invoice status distribution</CardDescription>
+            </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>
                     <BarChart accessibilityLayer data={chartData}>
@@ -117,6 +125,6 @@ export function ChartBarStacked() {
                     Showing total visitors for the last 6 months
                 </div>
             </CardFooter>
-        </>
+        </Card>
     )
 }

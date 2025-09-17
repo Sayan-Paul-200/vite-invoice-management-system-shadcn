@@ -1,5 +1,6 @@
 import AllProjects from "@/components/all-projects-dashboard"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CircleCheck } from "lucide-react"
 
 
 const Dashboard = () => {
@@ -13,7 +14,7 @@ const Dashboard = () => {
         >
           <div className='w-full overflow-x-auto pb-2'>
             <TabsList>
-              <TabsTrigger value='allProjects'>All Projects</TabsTrigger>
+              <TabsTrigger value='allProjects'><CircleCheck />  All Projects</TabsTrigger>
               <TabsTrigger value='project1'>Project 1</TabsTrigger>
               <TabsTrigger value='project2'>Project 2</TabsTrigger>
               <TabsTrigger value='project3'>Project 3</TabsTrigger>

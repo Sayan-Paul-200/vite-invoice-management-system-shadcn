@@ -1,7 +1,8 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { BadgeIndianRupee, BanknoteArrowUp, ClipboardClock, ReceiptText } from "lucide-react"
 import { ChartBarStacked } from "./all-projects-barcharts"
-import { ChartPieInteractive } from "./all-projects-donut"
+import ChartPieInvoices from "./all-projects-donut"
+import { ChartAreaInteractive } from "./all-projects-area-charts"
 
 const AllProjects = () => {
     return (
@@ -64,27 +65,14 @@ const AllProjects = () => {
                     </CardContent>
                 </Card>
             </div>
-            <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
-                <Card className='col-span-1 lg:col-span-4'>
-                    <CardHeader>
-                        <CardTitle>Overview</CardTitle>
-                    </CardHeader>
-                    <CardContent className='ps-2'>
-                        <ChartBarStacked />
-                    </CardContent>
-                </Card>
-                <Card className='col-span-1 lg:col-span-3'>
-                    <CardHeader>
-                        <CardTitle>Recent Sales</CardTitle>
-                        <CardDescription>
-                            You made 265 sales this month.
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        {/* <ChartPieLabel /> */}
-                        <ChartPieInteractive />
-                    </CardContent>
-                </Card>
+            <div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
+                
+                <ChartBarStacked />
+
+                <ChartPieInvoices />
+
+                <ChartAreaInteractive />
+                
             </div>
         </>
     )
