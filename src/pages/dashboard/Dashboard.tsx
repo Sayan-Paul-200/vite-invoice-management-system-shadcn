@@ -6,7 +6,7 @@ import { CircleCheck } from "lucide-react"
 const Dashboard = () => {
   return (
 
-    <div className="flex flex-1 flex-col gap-4 p-4">
+    <div className="flex flex-1 flex-col gap-4 p-4 sticky top-0">
         <Tabs
           orientation='vertical'
           defaultValue='allProjects'

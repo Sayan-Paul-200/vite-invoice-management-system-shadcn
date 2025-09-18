@@ -116,7 +116,7 @@ export default function ChartPieInvoices() {
       </CardHeader>
 
       <CardContent className="flex flex-1 justify-center pb-0">
-        <ChartContainer id={id} config={chartConfig} className="mx-auto aspect-square w-full max-w-[300px]">
+        <ChartContainer id={id} config={chartConfig} className="mx-auto aspect-square w-full max-w-sm">
           <PieChart>
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
 

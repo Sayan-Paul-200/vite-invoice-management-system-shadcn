@@ -1,13 +1,14 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { BadgeIndianRupee, BanknoteArrowUp, ClipboardClock, ReceiptText } from "lucide-react"
 import { ChartBarStacked } from "./all-projects-barcharts"
 import ChartPieInvoices from "./all-projects-donut"
 import { ChartAreaInteractive } from "./all-projects-area-charts"
+import AnalyticsKPIs from "./all-projects-kpis"
+import { ChartInvoicesOverTimeFixed } from "./all-projects-line-charts"
 
 const AllProjects = () => {
     return (
         <>
-            <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+            {/* KPIs */}
+            {/* <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
                 <Card>
                     <CardHeader className='flex flex-row items-center justify-between space-y-0'>
                         <CardTitle className='text-md font-medium'>
@@ -64,15 +65,20 @@ const AllProjects = () => {
                         </p>
                     </CardContent>
                 </Card>
-            </div>
+            </div> */}
+            <AnalyticsKPIs />
+
+            {/* Charts */}
             <div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
-                
+
                 <ChartBarStacked />
 
                 <ChartPieInvoices />
 
                 <ChartAreaInteractive />
-                
+
+                <ChartInvoicesOverTimeFixed />
+
             </div>
         </>
     )
