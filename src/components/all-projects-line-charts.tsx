@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import * as React from "react";
 import { TrendingUp } from "lucide-react";
 import {
   ComposedChart,
   CartesianGrid,
   XAxis,
   YAxis,
-//   Tooltip as RechartTooltip,
-//   Legend,
   Bar,
   Line,
-  LabelList,
+  // LabelList,
 } from "recharts";
 
 import {
@@ -29,26 +28,35 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-export const description = "Invoices over time — invoices (bars) + amounts (lines)";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Button } from "./ui/button";
+
+export const description = "Interactive invoices chart — range + toggles";
 
 // ---------- static demo data (monthly) ----------
 const chartData = [
   // month, invoices (count), total (INR), paid (INR)
-  { month: "January", invoices: 42, total: 125000, paid: 82000 },
-  { month: "February", invoices: 55, total: 198000, paid: 165000 },
-  { month: "March", invoices: 48, total: 172500, paid: 120000 },
-  { month: "April", invoices: 67, total: 240000, paid: 190000 },
-  { month: "May", invoices: 80, total: 312000, paid: 260000 },
-  { month: "June", invoices: 72, total: 285000, paid: 220000 },
+  { month: "Jan 2025", invoices: 42, total: 125000, paid: 52000 },
+  { month: "Feb 2025", invoices: 55, total: 198000, paid: 115000 },
+  { month: "Mar 2025", invoices: 48, total: 172500, paid: 120000 },
+  { month: "Apr 2025", invoices: 67, total: 240000, paid: 105000 },
+  { month: "May 2025", invoices: 80, total: 312000, paid: 260000 },
+  { month: "Jun 2025", invoices: 72, total: 285000, paid: 220000 },
 ];
 
 const chartConfig = {
-  invoices: { label: "# Invoices", color: "var(--chart-1)" },
-  total: { label: "Total Amount", color: "var(--chart-2)" },
-  paid: { label: "Paid Amount", color: "var(--chart-3)" },
+  invoices: { label: "# Invoices", color: "var(--chart-5)" },
+  total: { label: "Total Amount", color: "var(--primary)" },
+  paid: { label: "Paid Amount", color: "var(--secondary)" },
 } satisfies ChartConfig;
 
-// ---------- helper for currency formatting in tooltip/axis ----------
+// ---------- helpers ----------
 const formatINR = (v: number) =>
   new Intl.NumberFormat("en-IN", {
     style: "currency",
@@ -56,25 +64,122 @@ const formatINR = (v: number) =>
     maximumFractionDigits: 0,
   }).format(v);
 
+// map range keys to number of points to show (months)
+const RANGE_TO_POINTS: Record<string, number> = {
+  "6m": 6,
+  "3m": 3,
+  "1m": 1,
+};
+
 // ---------- component ----------
-export function ChartInvoicesOverTimeFixed() {
+export function ChartInvoicesOverTimeInteractive() {
+  const [range, setRange] = React.useState<"6m" | "3m" | "1m">("6m");
+  const [visible, setVisible] = React.useState({
+    invoices: true,
+    total: true,
+    paid: true,
+  });
+
+  // compute filtered data (last N points)
+  const filteredData = React.useMemo(() => {
+    const points = RANGE_TO_POINTS[range] ?? chartData.length;
+    return chartData.slice(Math.max(0, chartData.length - points));
+  }, [range]);
+
+  const toggle = (key: "invoices" | "total" | "paid") =>
+    setVisible((s) => ({ ...s, [key]: !s[key] }));
+
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between w-full gap-4">
-          <div>
-            <CardTitle>Invoices Over Time</CardTitle>
-            <CardDescription>Monthly trend — invoice count & cashflow</CardDescription>
-          </div>
+    <Card className="col-span-1 lg:col-span-1 flex flex-col pt-0">
+      <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
+        <div className="grid flex-1 gap-1">
+          <CardTitle>Invoices Over Time</CardTitle>
+          <CardDescription>Monthly trend — invoice count & cashflow</CardDescription>
         </div>
+
+        {/* Range selector */}
+        <Select value={range} onValueChange={(v) => setRange(v as any)}>
+          <SelectTrigger
+            className="hidden w-[160px] rounded-lg sm:ml-auto sm:flex"
+            aria-label="Select range"
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="rounded-xl">
+            <SelectItem value="6m" className="rounded-lg">
+              Last 6 months
+            </SelectItem>
+            <SelectItem value="3m" className="rounded-lg">
+              Last 3 months
+            </SelectItem>
+            <SelectItem value="1m" className="rounded-lg">
+              Last 1 month
+            </SelectItem>
+          </SelectContent>
+        </Select>
       </CardHeader>
 
-      <CardContent>
-        <ChartContainer config={chartConfig}>
+      <CardContent className="px-2 sm:px-4">
+        {/* small toggles for series visibility */}
+        <div className="mb-3 flex flex-wrap justify-center items-center gap-2">
+          <Button
+            variant={visible.invoices ? "outline" : "ghost"}
+            onClick={() => toggle("invoices")}
+            aria-pressed={visible.invoices}
+            className={`${
+              visible.invoices
+                ? "bg-secondary border-secondary"
+                : ""
+            }`}
+          >
+            {/* small legend color box */}
+            <span
+              className="inline-block h-2 w-4 shrink-0 rounded-xs"
+              style={{ background: "var(--chart-5)" }}
+            />
+            # Invoices
+          </Button>
+
+          <Button
+            variant={visible.total ? "outline" : "ghost"}
+            onClick={() => toggle("total")}
+            aria-pressed={visible.total}
+            className={`${
+              visible.total
+                ? "bg-secondary border-secondary"
+                : ""
+            }`}
+          >
+            <span
+              className="inline-block h-2 w-4 shrink-0 rounded-sm"
+              style={{ background: "var(--primary)" }}
+            />
+            Total Amount
+          </Button>
+
+          <Button
+            variant={visible.paid ? "outline" : "ghost"}
+            onClick={() => toggle("paid")}
+            aria-pressed={visible.paid}
+            className={`${
+              visible.paid
+                ? "bg-secondary border-secondary"
+                : ""
+            }`}
+          >
+            <span
+              className="inline-block h-2 w-4 shrink-0 rounded-sm"
+              style={{ background: "var(--secondary)" }}
+            />
+            Paid Amount
+          </Button>
+        </div>
+
+        <ChartContainer config={chartConfig} className="aspect-auto h-[300px] w-full">
           <ComposedChart
             accessibilityLayer
-            data={chartData}
-            margin={{ top: 12, right: 24, left: 12, bottom: 6 }}
+            data={filteredData}
+            margin={{ top: 12, bottom: 6 }}
           >
             <CartesianGrid vertical={false} />
 
@@ -84,7 +189,7 @@ export function ChartInvoicesOverTimeFixed() {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => (value as string).slice(0, 3)}
+              tickFormatter={(v) => (v as string).slice(0, 3)}
             />
 
             {/* Left Y-axis for amounts (INR) */}
@@ -107,57 +212,77 @@ export function ChartInvoicesOverTimeFixed() {
               tickFormatter={(v) => `${v}`}
             />
 
-            {/* Tooltip + Legend using shadcn wrappers */}
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            {/* Tooltip + Legend (ChartLegend kept for visual parity) */}
+            <ChartTooltip
+              cursor={false}
+              content={
+                <ChartTooltipContent
+                  className="w-[200px]"
+                  indicator="dot"
+                  labelFormatter={(value: any) => {
+                    // show full month label in tooltip
+                    return value;
+                  }}
+                />
+              }
+            />
             <ChartLegend content={<ChartLegendContent />} />
 
             {/* Bars: invoice counts (mapped to right axis) */}
-            <Bar
-              dataKey="invoices"
-              name="# Invoices"
-              yAxisId="count"
-            //   barSize={18}
-              fill="var(--color-invoices, var(--chart-1))"
-              radius={[4, 4, 0, 0]}
-            />
+            {visible.invoices && (
+              <Bar
+                dataKey="invoices"
+                name="# Invoices"
+                yAxisId="count"
+                // barSize={18}
+                fill="var(--chart-5)"
+                radius={[4, 4, 0, 0]}
+              />
+            )}
 
             {/* Line: Total Amount (left axis) */}
-            <Line
-              dataKey="total"
-              name="Total Amount"
-              type="monotone"
-              yAxisId="amount"
-              stroke="var(--color-total, var(--chart-2))"
-              strokeWidth={2}
-              dot={false}
-            >
-              <LabelList
+            {visible.total && (
+              <Line
                 dataKey="total"
-                position="top"
-                formatter={(val: any) => formatINR(val)}
-                className="fill-foreground"
-                fontSize={12}
-              />
-            </Line>
+                name="Total Amount"
+                type="monotone"
+                yAxisId="amount"
+                stroke="var(--primary)"
+                strokeWidth={2}
+                dot={true}
+                activeDot={{ r: 6 }}
+              >
+                {/* <LabelList
+                  dataKey="total"
+                  position="top"
+                  formatter={(val: any) => formatINR(val)}
+                  className="fill-foreground"
+                  fontSize={8}
+                /> */}
+              </Line>
+            )}
 
             {/* Line: Paid Amount (left axis) */}
-            <Line
-              dataKey="paid"
-              name="Paid Amount"
-              type="monotone"
-              yAxisId="amount"
-              stroke="var(--color-paid, var(--chart-3))"
-              strokeWidth={2}
-              dot={false}
-            >
-              <LabelList
+            {visible.paid && (
+              <Line
                 dataKey="paid"
-                position="top"
-                formatter={(val: any) => formatINR(val)}
-                className="fill-foreground"
-                fontSize={12}
-              />
-            </Line>
+                name="Paid Amount"
+                type="monotone"
+                yAxisId="amount"
+                stroke="var(--secondary)"
+                strokeWidth={2}
+                dot={true}
+                activeDot={{ r: 6 }}
+              >
+                {/* <LabelList
+                  dataKey="paid"
+                  position="top"
+                  formatter={(val: any) => formatINR(val)}
+                  className="fill-foreground"
+                  fontSize={12}
+                /> */}
+              </Line>
+            )}
           </ComposedChart>
         </ChartContainer>
       </CardContent>
@@ -167,11 +292,11 @@ export function ChartInvoicesOverTimeFixed() {
           Trending up by 8.9% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="text-muted-foreground">
-          Aggregation: monthly — # invoices (bars), total & paid amounts (lines).
+          Aggregation: monthly — # invoices (bars), total & paid amounts (lines). Use the toggles to hide/show series.
         </div>
       </CardFooter>
     </Card>
   );
 }
 
-export default ChartInvoicesOverTimeFixed;
+export default ChartInvoicesOverTimeInteractive;

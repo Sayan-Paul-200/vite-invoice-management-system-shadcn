@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 const Sparkline: React.FC<{ data: number[]; width?: number; height?: number }> = ({
     data,
-    width = 200,
+    width = 150,
     height = 30,
 }) => {
     const padding = 2;

@@ -2,7 +2,7 @@ import { ChartBarStacked } from "./all-projects-barcharts"
 import ChartPieInvoices from "./all-projects-donut"
 import { ChartAreaInteractive } from "./all-projects-area-charts"
 import AnalyticsKPIs from "./all-projects-kpis"
-import { ChartInvoicesOverTimeFixed } from "./all-projects-line-charts"
+import { ChartInvoicesOverTimeInteractive } from "./all-projects-line-charts"
 
 const AllProjects = () => {
     return (
@@ -77,7 +77,7 @@ const AllProjects = () => {
 
                 <ChartAreaInteractive />
 
-                <ChartInvoicesOverTimeFixed />
+                <ChartInvoicesOverTimeInteractive />
 
             </div>
         </>
